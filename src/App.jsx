@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/common/Layout'
+import Restaurants from './pages/Restaurants'
 import './index.css'
 
 function Home() { return <div>Ana Sayfa</div> }
-function Restaurants() { return <div>Restoranlar</div> }
 function RestaurantDetail() { return <div>Restoran Detay</div> }
 function Cart() { return <div>Sepet</div> }
 function Checkout() { return <div>Ödeme</div> }

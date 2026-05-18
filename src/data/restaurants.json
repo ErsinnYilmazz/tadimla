@@ -1,0 +1,110 @@
+[
+  {
+    "id": "1",
+    "name": "Ember Burger",
+    "category": "Burger",
+    "rating": 4.8,
+    "reviewCount": 342,
+    "deliveryTime": "20-30",
+    "deliveryFee": 9.90,
+    "minimumOrder": 50,
+    "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=250&fit=crop",
+    "tags": ["energetic", "happy"],
+    "isOpen": true,
+    "menu": [
+      { "id": "m1", "name": "Klasik Burger", "price": 89.90, "image": "https://images.unsplash.com/photo-1550317138-10000687a72b?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Cheeseburger", "price": 99.90, "image": "https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Patates Kızartması", "price": 39.90, "image": "https://images.unsplash.com/photo-1576107232684-1279f390859f?w=200&h=200&fit=crop" }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Sushi Nori",
+    "category": "Sushi",
+    "rating": 4.9,
+    "reviewCount": 521,
+    "deliveryTime": "35-45",
+    "deliveryFee": 14.90,
+    "minimumOrder": 80,
+    "image": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&h=250&fit=crop",
+    "tags": ["calm", "happy"],
+    "isOpen": true,
+    "menu": [
+      { "id": "m1", "name": "Salmon Roll", "price": 129.90, "image": "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Tuna Nigiri", "price": 149.90, "image": "https://images.unsplash.com/photo-1617196034099-5328c713b4f0?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Miso Çorbası", "price": 49.90, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&h=200&fit=crop" }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Comfort Bowl",
+    "category": "Ev Yemeği",
+    "rating": 4.7,
+    "reviewCount": 289,
+    "deliveryTime": "25-35",
+    "deliveryFee": 7.90,
+    "minimumOrder": 40,
+    "image": "https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=250&fit=crop",
+    "tags": ["sad", "stressed"],
+    "isOpen": true,
+    "menu": [
+      { "id": "m1", "name": "Mercimek Çorbası", "price": 49.90, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Kuru Fasulye", "price": 79.90, "image": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Sütlaç", "price": 39.90, "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&h=200&fit=crop" }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Green Gains",
+    "category": "Sağlıklı",
+    "rating": 4.6,
+    "reviewCount": 198,
+    "deliveryTime": "20-30",
+    "deliveryFee": 11.90,
+    "minimumOrder": 60,
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=250&fit=crop",
+    "tags": ["energetic", "stressed"],
+    "isOpen": true,
+    "menu": [
+      { "id": "m1", "name": "Protein Bowl", "price": 119.90, "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Avokado Toast", "price": 89.90, "image": "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Smoothie Bowl", "price": 99.90, "image": "https://images.unsplash.com/photo-1490323814511-93e3b1d6a578?w=200&h=200&fit=crop" }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Tatlı Köşe",
+    "category": "Tatlı",
+    "rating": 4.8,
+    "reviewCount": 445,
+    "deliveryTime": "15-25",
+    "deliveryFee": 8.90,
+    "minimumOrder": 35,
+    "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&h=250&fit=crop",
+    "tags": ["happy", "sad"],
+    "isOpen": false,
+    "menu": [
+      { "id": "m1", "name": "Cheesecake", "price": 79.90, "image": "https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Waffle", "price": 89.90, "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Dondurma", "price": 49.90, "image": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&h=200&fit=crop" }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Pizza Forno",
+    "category": "Pizza",
+    "rating": 4.5,
+    "reviewCount": 367,
+    "deliveryTime": "30-40",
+    "deliveryFee": 9.90,
+    "minimumOrder": 55,
+    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop",
+    "tags": ["happy", "energetic"],
+    "isOpen": true,
+    "menu": [
+      { "id": "m1", "name": "Margherita", "price": 109.90, "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200&h=200&fit=crop" },
+      { "id": "m2", "name": "Pepperoni", "price": 129.90, "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&h=200&fit=crop" },
+      { "id": "m3", "name": "Dört Peynir", "price": 139.90, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&h=200&fit=crop" }
+    ]
+  }
+]
