@@ -1,21 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/common/Navbar'
+import Layout from './components/common/Layout'
 import './index.css'
 
-function Home() { return <div style={{padding: '2rem'}}>Ana Sayfa</div> }
-function Restaurants() { return <div style={{padding: '2rem'}}>Restoranlar</div> }
-function RestaurantDetail() { return <div style={{padding: '2rem'}}>Restoran Detay</div> }
-function Cart() { return <div style={{padding: '2rem'}}>Sepet</div> }
-function Checkout() { return <div style={{padding: '2rem'}}>Ödeme</div> }
-function OrderTracking() { return <div style={{padding: '2rem'}}>Sipariş Takibi</div> }
-function MoodFood() { return <div style={{padding: '2rem'}}>Ruh Haline Göre Yemek</div> }
-function NotFound() { return <div style={{padding: '2rem'}}>Sayfa Bulunamadı</div> }
+function Home() { return <div>Ana Sayfa</div> }
+function Restaurants() { return <div>Restoranlar</div> }
+function RestaurantDetail() { return <div>Restoran Detay</div> }
+function Cart() { return <div>Sepet</div> }
+function Checkout() { return <div>Ödeme</div> }
+function OrderTracking() { return <div>Sipariş Takibi</div> }
+function MoodFood() { return <div>Ruh Haline Göre Yemek</div> }
+function NotFound() { return <div>Sayfa Bulunamadı</div> }
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <main>
+      <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/restoranlar" element={<Restaurants />} />
@@ -26,7 +25,7 @@ function App() {
           <Route path="/ruh-haline-gore" element={<MoodFood />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </main>
+      </Layout>
     </BrowserRouter>
   )
 }
