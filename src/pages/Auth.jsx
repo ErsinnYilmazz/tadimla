@@ -46,26 +46,32 @@ function Auth() {
   const handleLogin = async () => {
     const newErrors = validateLogin()
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
-    const success = await login(loginForm.email, loginForm.password)
-    if (success) navigate('/')
+    try {
+      await login(loginForm.email, loginForm.password)
+      navigate('/')
+    } catch (err) {
+      setErrors({ general: 'E-posta veya şifre hatalı' })
+    }
   }
 
   const handleRegister = async () => {
     const newErrors = validateRegister()
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
-    const success = await register(registerForm.name, registerForm.email, registerForm.password)
-    if (success) navigate('/')
+    try {
+      await register(registerForm.name, registerForm.email, registerForm.password)
+      navigate('/')
+    } catch (err) {
+      setErrors({ general: err.message || 'Kayıt olurken hata oluştu' })
+    }
   }
 
   return (
     <div className={styles.page}>
       <div className={styles.card}>
 
-        {/* Logo */}
         <div className={styles.logo}>🔥 tadımla</div>
         <p className={styles.logoSub}>Lezzetin adresi</p>
 
-        {/* Sekmeler */}
         <div className={styles.tabs}>
           <button
             onClick={() => { setTab('login'); setErrors({}) }}
@@ -81,7 +87,6 @@ function Auth() {
           </button>
         </div>
 
-        {/* Giriş Formu */}
         {tab === 'login' && (
           <div className={styles.form}>
             <div className={styles.formGroup}>
@@ -110,6 +115,12 @@ function Auth() {
               {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
 
+            {errors.general && (
+              <div className={styles.generalError}>
+                ⚠️ {errors.general}
+              </div>
+            )}
+
             <button
               onClick={handleLogin}
               disabled={loading}
@@ -127,7 +138,6 @@ function Auth() {
           </div>
         )}
 
-        {/* Kayıt Formu */}
         {tab === 'register' && (
           <div className={styles.form}>
             <div className={styles.formGroup}>
@@ -180,6 +190,12 @@ function Auth() {
               />
               {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
             </div>
+
+            {errors.general && (
+              <div className={styles.generalError}>
+                ⚠️ {errors.general}
+              </div>
+            )}
 
             <button
               onClick={handleRegister}
