@@ -5,11 +5,11 @@ import Restaurants from './pages/Restaurants'
 import RestaurantDetail from './pages/RestaurantDetail'
 import Cart from './pages/Cart'
 import MoodFood from './pages/MoodFood'
+import OrderTracking from './pages/OrderTracking'
 import { CartProvider } from './context/CartContext'
 import './index.css'
 
 function Checkout() { return <div>Ödeme</div> }
-function OrderTracking() { return <div>Sipariş Takibi</div> }
 function NotFound() { return <div>Sayfa Bulunamadı</div> }
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
             <Route path="/sepet" element={<Cart />} />
             <Route path="/odeme" element={<Checkout />} />
             <Route path="/siparis-takibi/:id" element={<OrderTracking />} />
+            <Route path="/siparis-takibi" element={<OrderTracking />} />
             <Route path="/ruh-haline-gore" element={<MoodFood />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
