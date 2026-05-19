@@ -1,30 +1,57 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RestaurantCard from '../components/restaurant/RestaurantCard'
-import restaurantsData from '../data/restaurants.json'
+import { getRestaurants } from '../services/restaurantService'
 import styles from './Restaurants.module.css'
 
 const categories = ['Tümü', 'Burger', 'Sushi', 'Ev Yemeği', 'Sağlıklı', 'Tatlı', 'Pizza']
 
 function Restaurants() {
+  const [restaurants, setRestaurants] = useState([])
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('Tümü')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const filtered = restaurantsData.filter(r => {
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const data = await getRestaurants()
+        setRestaurants(data)
+      } catch (err) {
+        setError('Restoranlar yüklenemedi')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchRestaurants()
+  }, [])
+
+  const filtered = restaurants.filter(r => {
     const matchSearch = r.name.toLowerCase().includes(search.toLowerCase())
     const matchCategory = activeCategory === 'Tümü' || r.category === activeCategory
     return matchSearch && matchCategory
   })
 
+  if (loading) return (
+    <div className={styles.loadingWrapper}>
+      <div className={styles.loading}>⏳ Restoranlar yükleniyor...</div>
+    </div>
+  )
+
+  if (error) return (
+    <div className={styles.loadingWrapper}>
+      <div className={styles.error}>😕 {error}</div>
+    </div>
+  )
+
   return (
     <div className={styles.page}>
-
-      {/* Başlık */}
       <div className={styles.header}>
         <h1 className={styles.title}>Restoranlar</h1>
         <p className={styles.subtitle}>Sana en yakın lezzetleri keşfet</p>
       </div>
 
-      {/* Arama */}
       <div className={styles.searchWrapper}>
         <span className={styles.searchIcon}>🔍</span>
         <input
@@ -36,7 +63,6 @@ function Restaurants() {
         />
       </div>
 
-      {/* Kategori filtreleri */}
       <div className={styles.categories}>
         {categories.map(cat => (
           <button
@@ -49,10 +75,8 @@ function Restaurants() {
         ))}
       </div>
 
-      {/* Sonuç sayısı */}
       <p className={styles.resultCount}>{filtered.length} restoran bulundu</p>
 
-      {/* Kart grid */}
       {filtered.length > 0 ? (
         <div className={styles.grid}>
           {filtered.map(restaurant => (
@@ -64,7 +88,6 @@ function Restaurants() {
           <p>😕 Aradığın restoran bulunamadı</p>
         </div>
       )}
-
     </div>
   )
 }

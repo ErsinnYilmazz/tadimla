@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import RestaurantCard from '../components/restaurant/RestaurantCard'
-import restaurantsData from '../data/restaurants.json'
+import { getRestaurants } from '../services/restaurantService'
 import moodMap from '../data/moodMap.json'
 import styles from './MoodFood.module.css'
 
@@ -17,6 +17,22 @@ function MoodFood() {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const [selectedMood, setSelectedMood] = useState(searchParams.get('mood') || null)
+  const [restaurants, setRestaurants] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const data = await getRestaurants()
+        setRestaurants(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchRestaurants()
+  }, [])
 
   useEffect(() => {
     const moodFromUrl = searchParams.get('mood')
@@ -30,19 +46,17 @@ function MoodFood() {
 
   const moodData = selectedMood ? moodMap[selectedMood] : null
   const filtered = selectedMood
-    ? restaurantsData.filter(r => r.tags.includes(selectedMood) && r.isOpen)
+    ? restaurants.filter(r => r.tags?.includes(selectedMood) && r.is_open)
     : []
 
   return (
     <div className={styles.page}>
 
-      {/* Başlık */}
       <div className={styles.header}>
         <h1 className={styles.title}>Ruh Haline Göre Yemek</h1>
         <p className={styles.subtitle}>Bugün nasıl hissediyorsun? Sana özel öneriler sunalım.</p>
       </div>
 
-      {/* Mood Seçici */}
       <div className={styles.moodGrid}>
         {moods.map(mood => (
           <button
@@ -60,7 +74,6 @@ function MoodFood() {
         ))}
       </div>
 
-      {/* Seçili Mood Bilgisi */}
       {moodData && (
         <div
           className={styles.moodBanner}
@@ -81,36 +94,39 @@ function MoodFood() {
         </div>
       )}
 
-      {/* Sonuçlar */}
       {selectedMood && (
         <div className={styles.results}>
-          <h2 className={styles.resultsTitle}>
-            {filtered.length > 0
-              ? `${filtered.length} restoran seni bekliyor`
-              : 'Uygun restoran bulunamadı'}
-          </h2>
-
-          {filtered.length > 0 ? (
-            <div className={styles.grid}>
-              {filtered.map(r => (
-                <RestaurantCard key={r.id} restaurant={r} />
-              ))}
-            </div>
+          {loading ? (
+            <p>⏳ Yükleniyor...</p>
           ) : (
-            <div className={styles.empty}>
-              <p>😕 Bu ruh hali için açık restoran bulunamadı.</p>
-              <button
-                onClick={() => navigate('/restoranlar')}
-                className={styles.browseButton}
-              >
-                Tüm Restoranları Gör
-              </button>
-            </div>
+            <>
+              <h2 className={styles.resultsTitle}>
+                {filtered.length > 0
+                  ? `${filtered.length} restoran seni bekliyor`
+                  : 'Uygun restoran bulunamadı'}
+              </h2>
+              {filtered.length > 0 ? (
+                <div className={styles.grid}>
+                  {filtered.map(r => (
+                    <RestaurantCard key={r.id} restaurant={r} />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.empty}>
+                  <p>😕 Bu ruh hali için açık restoran bulunamadı.</p>
+                  <button
+                    onClick={() => navigate('/restoranlar')}
+                    className={styles.browseButton}
+                  >
+                    Tüm Restoranları Gör
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
 
-      {/* Mood seçilmediyse */}
       {!selectedMood && (
         <div className={styles.prompt}>
           <span className={styles.promptEmoji}>☝️</span>

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import RestaurantCard from '../components/restaurant/RestaurantCard'
-import restaurantsData from '../data/restaurants.json'
+import { getRestaurants } from '../services/restaurantService'
 import styles from './Home.module.css'
 
 const moods = [
@@ -13,7 +14,19 @@ const moods = [
 
 function Home() {
   const navigate = useNavigate()
-  const featured = restaurantsData.filter(r => r.isOpen).slice(0, 3)
+  const [featured, setFeatured] = useState([])
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const data = await getRestaurants()
+        setFeatured(data.filter(r => r.is_open).slice(0, 3))
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchRestaurants()
+  }, [])
 
   return (
     <div className={styles.page}>
