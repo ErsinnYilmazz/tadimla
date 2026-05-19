@@ -1,15 +1,31 @@
-import { Link } from 'react-router-dom'
-import styles from './RestaurantCard.module.css'
+import { Link } from "react-router-dom";
+import styles from "./RestaurantCard.module.css";
 
 function RestaurantCard({ restaurant }) {
-  const { id, name, category, rating, reviewCount, deliveryTime, deliveryFee, image, isOpen } = restaurant
+  const {
+    id,
+    name,
+    category,
+    rating,
+    reviewCount,
+    deliveryTime,
+    deliveryFee,
+    image,
+    isOpen,
+  } = restaurant;
 
   return (
     <Link to={`/restoran/${id}`} className={styles.card}>
-
       {/* Fotoğraf */}
       <div className={styles.imageWrapper}>
-        <img src={image} alt={name} className={styles.image} />
+        <img
+          src={image}
+          alt={name}
+          className={styles.image}
+          onError={(e) => {
+            e.target.src = "https://placehold.co/400x250/FF6B35/white?text=🍽️";
+          }}
+        />
         {!isOpen && (
           <div className={styles.closedOverlay}>
             <span>Şu an kapalı</span>
@@ -32,13 +48,14 @@ function RestaurantCard({ restaurant }) {
           <span className={styles.metaItem}>🕐 {deliveryTime} dk</span>
           <span className={styles.dot}>•</span>
           <span className={styles.metaItem}>
-            {deliveryFee === 0 ? '🎉 Ücretsiz teslimat' : `🛵 ${deliveryFee.toFixed(2)} ₺`}
+            {deliveryFee === 0
+              ? "🎉 Ücretsiz teslimat"
+              : `🛵 ${deliveryFee.toFixed(2)} ₺`}
           </span>
         </div>
       </div>
-
     </Link>
-  )
+  );
 }
 
-export default RestaurantCard
+export default RestaurantCard;
