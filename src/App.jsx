@@ -6,11 +6,11 @@ import RestaurantDetail from './pages/RestaurantDetail'
 import Cart from './pages/Cart'
 import MoodFood from './pages/MoodFood'
 import OrderTracking from './pages/OrderTracking'
+import Checkout from './pages/Checkout'
 import { CartProvider } from './context/CartContext'
 import './index.css'
 
-function Checkout() { return <div>Ödeme</div> }
-function NotFound() { return <div>Sayfa Bulunamadı</div> }
+function NotFound() { return <div style={{padding: '2rem', textAlign: 'center'}}>404 — Sayfa Bulunamadı</div> }
 
 function App() {
   return (
