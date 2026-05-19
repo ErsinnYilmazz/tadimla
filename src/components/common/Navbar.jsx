@@ -1,10 +1,13 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
+import { useAuth } from '../../context/AuthContext'
 import styles from './Navbar.module.css'
 
 function Navbar() {
   const location = useLocation()
+  const navigate = useNavigate()
   const { totalItems } = useCart()
+  const { user, logout } = useAuth()
 
   const isActive = (path) => location.pathname === path
 
@@ -35,6 +38,20 @@ function Navbar() {
               <span className={styles.cartBadge}>{totalItems}</span>
             )}
           </Link>
+
+          {user ? (
+            <div className={styles.userMenu}>
+              <span className={styles.userName}>👤 {user.name.split(' ')[0]}</span>
+              <button onClick={logout} className={styles.logoutButton}>Çıkış</button>
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate('/giris')}
+              className={styles.loginButton}
+            >
+              Giriş Yap
+            </button>
+          )}
         </div>
 
       </div>
