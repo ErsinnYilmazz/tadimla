@@ -79,11 +79,9 @@ function Checkout() {
       </div>
 
       <div className={styles.layout}>
-
         <div className={styles.left}>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>📍 Teslimat Bilgileri</h2>
-
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Ad Soyad</label>
@@ -136,7 +134,6 @@ function Checkout() {
 
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>💳 Ödeme Yöntemi</h2>
-
             <div className={styles.paymentMethods}>
               <button
                 onClick={() => setForm(prev => ({ ...prev, paymentMethod: 'card' }))}
@@ -216,7 +213,6 @@ function Checkout() {
         <div className={styles.right}>
           <div className={styles.summary}>
             <h2 className={styles.summaryTitle}>Sipariş Özeti</h2>
-
             <div className={styles.summaryItems}>
               {items.map(item => (
                 <div key={item.id} className={styles.summaryItem}>
@@ -228,9 +224,7 @@ function Checkout() {
                 </div>
               ))}
             </div>
-
             <div className={styles.summaryDivider} />
-
             <div className={styles.summaryRow}>
               <span>Ara toplam</span>
               <span>{totalPrice.toFixed(2)} ₺</span>
@@ -239,14 +233,11 @@ function Checkout() {
               <span>Teslimat ücreti</span>
               <span>{DELIVERY_FEE.toFixed(2)} ₺</span>
             </div>
-
             <div className={styles.summaryDivider} />
-
             <div className={styles.summaryTotal}>
               <span>Toplam</span>
               <span className={styles.summaryTotalPrice}>{total.toFixed(2)} ₺</span>
             </div>
-
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -254,11 +245,9 @@ function Checkout() {
             >
               {loading ? '⏳ Sipariş veriliyor...' : `🛵 Siparişi Onayla — ${total.toFixed(2)} ₺`}
             </button>
-
             <p className={styles.secureNote}>🔒 Güvenli ödeme altyapısı</p>
           </div>
         </div>
-
       </div>
     </div>
   )
