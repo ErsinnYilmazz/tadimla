@@ -4,12 +4,12 @@ import Home from './pages/Home'
 import Restaurants from './pages/Restaurants'
 import RestaurantDetail from './pages/RestaurantDetail'
 import Cart from './pages/Cart'
+import MoodFood from './pages/MoodFood'
 import { CartProvider } from './context/CartContext'
 import './index.css'
 
 function Checkout() { return <div>Ödeme</div> }
 function OrderTracking() { return <div>Sipariş Takibi</div> }
-function MoodFood() { return <div>Ruh Haline Göre Yemek</div> }
 function NotFound() { return <div>Sayfa Bulunamadı</div> }
 
 function App() {

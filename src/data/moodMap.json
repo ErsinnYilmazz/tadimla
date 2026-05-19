@@ -1,0 +1,42 @@
+{
+  "happy": {
+    "label": "Mutlu",
+    "emoji": "😄",
+    "description": "Mutlu anlar daha lezzetli olur!",
+    "color": "#FFD93D",
+    "tags": ["happy"],
+    "suggestions": ["Hafif atıştırmalıklar", "Tatlılar", "Meyveli içecekler"]
+  },
+  "sad": {
+    "label": "Üzgün",
+    "emoji": "😔",
+    "description": "Kendini iyi hissettirecek comfort food zamanı.",
+    "color": "#6B9FD4",
+    "tags": ["sad"],
+    "suggestions": ["Sıcak çorbalar", "Makarna", "Sütlaç"]
+  },
+  "stressed": {
+    "label": "Stresli",
+    "emoji": "😤",
+    "description": "Hafif ve sağlıklı yemekler seni rahatlatır.",
+    "color": "#FF6B6B",
+    "tags": ["stressed"],
+    "suggestions": ["Salatalar", "Yeşil yiyecekler", "Hafif yemekler"]
+  },
+  "calm": {
+    "label": "Sakin",
+    "emoji": "😌",
+    "description": "Huzurlu anlar için özel lezzetler.",
+    "color": "#95D5B2",
+    "tags": ["calm"],
+    "suggestions": ["Sushi", "Mezeler", "Çay eşliğinde atıştırmalıklar"]
+  },
+  "energetic": {
+    "label": "Enerjik",
+    "emoji": "🤩",
+    "description": "Enerjini koruyacak güçlü yemekler!",
+    "color": "#FF9F1C",
+    "tags": ["energetic"],
+    "suggestions": ["Protein kaynakları", "Smoothie bowl", "Burger"]
+  }
+}
