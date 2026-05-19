@@ -2,11 +2,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/common/Layout'
 import Restaurants from './pages/Restaurants'
 import RestaurantDetail from './pages/RestaurantDetail'
+import Cart from './pages/Cart'
 import { CartProvider } from './context/CartContext'
 import './index.css'
 
 function Home() { return <div>Ana Sayfa</div> }
-function Cart() { return <div>Sepet</div> }
 function Checkout() { return <div>Ödeme</div> }
 function OrderTracking() { return <div>Sipariş Takibi</div> }
 function MoodFood() { return <div>Ruh Haline Göre Yemek</div> }
