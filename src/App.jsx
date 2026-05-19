@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/common/Layout'
 import Restaurants from './pages/Restaurants'
+import { CartProvider } from './context/CartContext'
 import './index.css'
 
 function Home() { return <div>Ana Sayfa</div> }
@@ -14,18 +15,20 @@ function NotFound() { return <div>Sayfa Bulunamadı</div> }
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/restoranlar" element={<Restaurants />} />
-          <Route path="/restoran/:id" element={<RestaurantDetail />} />
-          <Route path="/sepet" element={<Cart />} />
-          <Route path="/odeme" element={<Checkout />} />
-          <Route path="/siparis-takibi/:id" element={<OrderTracking />} />
-          <Route path="/ruh-haline-gore" element={<MoodFood />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+      <CartProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/restoranlar" element={<Restaurants />} />
+            <Route path="/restoran/:id" element={<RestaurantDetail />} />
+            <Route path="/sepet" element={<Cart />} />
+            <Route path="/odeme" element={<Checkout />} />
+            <Route path="/siparis-takibi/:id" element={<OrderTracking />} />
+            <Route path="/ruh-haline-gore" element={<MoodFood />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>
+      </CartProvider>
     </BrowserRouter>
   )
 }

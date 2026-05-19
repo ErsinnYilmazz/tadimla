@@ -66,3 +66,22 @@
 .cartButton:hover {
   background-color: var(--color-primary-dark);
 }
+.cartButton {
+  position: relative;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--color-secondary);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
