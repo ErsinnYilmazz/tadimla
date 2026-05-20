@@ -9,6 +9,7 @@ import OrderTracking from './pages/OrderTracking'
 import Checkout from './pages/Checkout'
 import Auth from './pages/Auth'
 import Profile from './pages/Profile'
+import Admin from './pages/Admin'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import './index.css'
@@ -32,6 +33,7 @@ function App() {
               <Route path="/ruh-haline-gore" element={<MoodFood />} />
               <Route path="/giris" element={<Auth />} />
               <Route path="/profil" element={<Profile />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
