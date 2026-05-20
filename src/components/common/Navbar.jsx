@@ -41,13 +41,9 @@ function Navbar() {
 
           {user ? (
             <div className={styles.userMenu}>
-<<<<<<< HEAD
-              <span className={styles.userName}>👤 {user?.user_metadata?.name?.split(' ')[0] || user?.email}</span>
-=======
               <button onClick={() => navigate('/profil')} className={styles.userName}>
                 👤 {user?.user_metadata?.name?.split(' ')[0] || user?.email}
               </button>
->>>>>>> feature/profile
               <button onClick={logout} className={styles.logoutButton}>Çıkış</button>
             </div>
           ) : (
