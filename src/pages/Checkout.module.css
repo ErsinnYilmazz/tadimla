@@ -246,3 +246,24 @@
   font-size: var(--font-size-xs);
   color: var(--color-text-light);
 }
+.loginWarning {
+  background-color: rgba(255, 152, 0, 0.1);
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.generalError {
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
