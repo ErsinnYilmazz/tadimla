@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+import { createOrder } from '../services/orderService'
 import styles from './Checkout.module.css'
 
 const DELIVERY_FEE = 9.90
 
 function Checkout() {
   const navigate = useNavigate()
-  const { items, totalPrice, clearCart } = useCart()
+  const { items, totalPrice, clearCart, restaurantId } = useCart()
+  const { user } = useAuth()
 
   const [form, setForm] = useState({
-    name: '',
+    name: user?.user_metadata?.name || '',
     phone: '',
     address: '',
     note: '',
@@ -54,17 +57,39 @@ function Checkout() {
     return newErrors
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!user) {
+      navigate('/giris')
+      return
+    }
+
     const newErrors = validate()
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
+
     setLoading(true)
-    setTimeout(() => {
+    try {
+      const order = await createOrder({
+        restaurantId,
+        items,
+        totalPrice,
+        deliveryFee: DELIVERY_FEE,
+        address: form.address,
+        name: form.name,
+        phone: form.phone,
+        note: form.note,
+        paymentMethod: form.paymentMethod,
+      })
       clearCart()
-      navigate('/siparis-takibi/TDM-2024-001')
-    }, 1500)
+      navigate(`/siparis-takibi/${order.id}`)
+    } catch (err) {
+      console.error(err)
+      setErrors({ general: 'Sipariş verilirken hata oluştu' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const total = totalPrice + DELIVERY_FEE
@@ -82,6 +107,7 @@ function Checkout() {
         <div className={styles.left}>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>📍 Teslimat Bilgileri</h2>
+
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Ad Soyad</label>
@@ -134,6 +160,7 @@ function Checkout() {
 
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>💳 Ödeme Yöntemi</h2>
+
             <div className={styles.paymentMethods}>
               <button
                 onClick={() => setForm(prev => ({ ...prev, paymentMethod: 'card' }))}
@@ -213,6 +240,7 @@ function Checkout() {
         <div className={styles.right}>
           <div className={styles.summary}>
             <h2 className={styles.summaryTitle}>Sipariş Özeti</h2>
+
             <div className={styles.summaryItems}>
               {items.map(item => (
                 <div key={item.id} className={styles.summaryItem}>
@@ -224,7 +252,9 @@ function Checkout() {
                 </div>
               ))}
             </div>
+
             <div className={styles.summaryDivider} />
+
             <div className={styles.summaryRow}>
               <span>Ara toplam</span>
               <span>{totalPrice.toFixed(2)} ₺</span>
@@ -233,18 +263,34 @@ function Checkout() {
               <span>Teslimat ücreti</span>
               <span>{DELIVERY_FEE.toFixed(2)} ₺</span>
             </div>
+
             <div className={styles.summaryDivider} />
+
             <div className={styles.summaryTotal}>
               <span>Toplam</span>
               <span className={styles.summaryTotalPrice}>{total.toFixed(2)} ₺</span>
             </div>
+
+            {!user && (
+              <div className={styles.loginWarning}>
+                ⚠️ Sipariş vermek için giriş yapman gerekiyor
+              </div>
+            )}
+
+            {errors.general && (
+              <div className={styles.generalError}>
+                ⚠️ {errors.general}
+              </div>
+            )}
+
             <button
               onClick={handleSubmit}
               disabled={loading}
               className={`${styles.submitButton} ${loading ? styles.submitLoading : ''}`}
             >
-              {loading ? '⏳ Sipariş veriliyor...' : `🛵 Siparişi Onayla — ${total.toFixed(2)} ₺`}
+              {loading ? '⏳ Sipariş veriliyor...' : !user ? '🔐 Giriş Yap' : `🛵 Siparişi Onayla — ${total.toFixed(2)} ₺`}
             </button>
+
             <p className={styles.secureNote}>🔒 Güvenli ödeme altyapısı</p>
           </div>
         </div>
