@@ -8,6 +8,7 @@ import MoodFood from './pages/MoodFood'
 import OrderTracking from './pages/OrderTracking'
 import Checkout from './pages/Checkout'
 import Auth from './pages/Auth'
+import Profile from './pages/Profile'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import './index.css'
@@ -30,6 +31,7 @@ function App() {
               <Route path="/siparis-takibi" element={<OrderTracking />} />
               <Route path="/ruh-haline-gore" element={<MoodFood />} />
               <Route path="/giris" element={<Auth />} />
+              <Route path="/profil" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
