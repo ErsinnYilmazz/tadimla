@@ -13,7 +13,7 @@ function Admin() {
 
   const [orders, setOrders] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
-  const [users, setUsers] = useState([]);
+  
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
@@ -22,64 +22,52 @@ function Admin() {
   });
 
   useEffect(() => {
-    if (authLoading) return;
-    if (!user) {
-      navigate("/giris");
-      return;
-    }
-    checkAdmin();
-  }, [user, authLoading]);
+  if (authLoading) return
+  if (!user) { navigate('/giris'); return }
 
   const checkAdmin = async () => {
-    const { data, error } = await supabase
-      .from("admins")
-      .select("id")
-      .eq("id", user.id)
-      .single();
+    const { data } = await supabase
+      .from('admins')
+      .select('id')
+      .eq('id', user.id)
+      .single()
 
-    console.log("Admin check:", data, error, user.id);
+    if (!data) { navigate('/'); return }
+    setIsAdmin(true)
 
-    if (!data) {
-      navigate("/");
-      return;
-    }
-    setIsAdmin(true);
-    fetchData();
-  };
-
-  const fetchData = async () => {
     try {
       const [ordersRes, restaurantsRes] = await Promise.all([
-        supabase
-          .from("orders")
-          .select("*")
-          .order("created_at", { ascending: false }),
-        supabase.from("restaurants").select("*").order("name"),
-      ]);
+        supabase.from('orders').select('*').order('created_at', { ascending: false }),
+        supabase.from('restaurants').select('*').order('name')
+      ])
 
-      const ordersData = ordersRes.data || [];
-      const restaurantsData = restaurantsRes.data || [];
+      const ordersData = ordersRes.data || []
+      const restaurantsData = restaurantsRes.data || []
 
-      setOrders(ordersData);
-      setRestaurants(restaurantsData);
+      setOrders(ordersData)
+      setRestaurants(restaurantsData)
 
-      const totalRevenue = ordersData.reduce(
-        (sum, o) => sum + Number(o.total_price) + Number(o.delivery_fee),
-        0,
-      );
+      const totalRevenue = ordersData.reduce((sum, o) =>
+        sum + Number(o.total_price) + Number(o.delivery_fee), 0)
 
       setStats({
         totalOrders: ordersData.length,
         totalRevenue,
         totalRestaurants: restaurantsData.length,
-        totalUsers: new Set(ordersData.map((o) => o.user_id)).size,
-      });
+        totalUsers: new Set(ordersData.map(o => o.user_id)).size
+      })
     } catch (err) {
-      console.error(err);
+      console.error(err)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
+  checkAdmin()
+}, [user, authLoading])
+
+
+
 
   const updateOrderStatus = async (orderId, status) => {
     await supabase.from("orders").update({ status }).eq("id", orderId);

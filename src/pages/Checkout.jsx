@@ -11,6 +11,7 @@ function Checkout() {
   const navigate = useNavigate()
   const { items, totalPrice, clearCart, restaurantId } = useCart()
   const { user } = useAuth()
+  const [paymentStep, setPaymentStep] = useState('form')
 
   const [form, setForm] = useState({
     name: user?.user_metadata?.name || '',
@@ -24,7 +25,8 @@ function Checkout() {
   })
 
   const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
+
+  const total = totalPrice + DELIVERY_FEE
 
   if (items.length === 0) {
     return (
@@ -34,6 +36,21 @@ function Checkout() {
         <button onClick={() => navigate('/restoranlar')} className={styles.browseButton}>
           Restoranlara Git
         </button>
+      </div>
+    )
+  }
+
+  if (paymentStep === 'processing') {
+    return (
+      <div className={styles.processingPage}>
+        <div className={styles.processingCard}>
+          <div className={styles.spinner}>💳</div>
+          <h2 className={styles.processingTitle}>Ödeme İşleniyor...</h2>
+          <p className={styles.processingText}>Lütfen bekleyin, ödemeniz güvenli şekilde işleniyor.</p>
+          <div className={styles.processingBar}>
+            <div className={styles.processingFill} />
+          </div>
+        </div>
       </div>
     )
   }
@@ -58,19 +75,15 @@ function Checkout() {
   }
 
   const handleSubmit = async () => {
-    if (!user) {
-      navigate('/giris')
-      return
-    }
+    if (!user) { navigate('/giris'); return }
 
     const newErrors = validate()
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
 
-    setLoading(true)
+    setPaymentStep('processing')
+
     try {
+      await new Promise(r => setTimeout(r, 2000))
       const order = await createOrder({
         restaurantId,
         items,
@@ -83,16 +96,13 @@ function Checkout() {
         paymentMethod: form.paymentMethod,
       })
       clearCart()
-      navigate(`/siparis-takibi/${order.id}`)
+      navigate(`/odeme-basarili/${order.id}`)
     } catch (err) {
       console.error(err)
-      setErrors({ general: 'Sipariş verilirken hata oluştu' })
-    } finally {
-      setLoading(false)
+      setPaymentStep('form')
+      setErrors({ general: 'Ödeme işlemi başarısız oldu' })
     }
   }
-
-  const total = totalPrice + DELIVERY_FEE
 
   return (
     <div className={styles.page}>
@@ -285,10 +295,9 @@ function Checkout() {
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
-              className={`${styles.submitButton} ${loading ? styles.submitLoading : ''}`}
+              className={styles.submitButton}
             >
-              {loading ? '⏳ Sipariş veriliyor...' : !user ? '🔐 Giriş Yap' : `🛵 Siparişi Onayla — ${total.toFixed(2)} ₺`}
+              {!user ? '🔐 Giriş Yap' : `🛵 Siparişi Onayla — ${total.toFixed(2)} ₺`}
             </button>
 
             <p className={styles.secureNote}>🔒 Güvenli ödeme altyapısı</p>

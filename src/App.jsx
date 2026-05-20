@@ -1,3 +1,5 @@
+import PaymentSuccess from './pages/PaymentSuccess'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/common/Layout'
 import Home from './pages/Home'
@@ -29,6 +31,7 @@ function App() {
               <Route path="/sepet" element={<Cart />} />
               <Route path="/odeme" element={<Checkout />} />
               <Route path="/siparis-takibi/:id" element={<OrderTracking />} />
+              <Route path="/odeme-basarili/:id" element={<PaymentSuccess />} />
               <Route path="/siparis-takibi" element={<OrderTracking />} />
               <Route path="/ruh-haline-gore" element={<MoodFood />} />
               <Route path="/giris" element={<Auth />} />
