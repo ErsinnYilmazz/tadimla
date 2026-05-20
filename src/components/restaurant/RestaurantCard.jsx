@@ -11,7 +11,10 @@ function RestaurantCard({ restaurant }) {
           src={image}
           alt={name}
           className={styles.image}
-          onError={(e) => { e.target.src = 'https://placehold.co/400x250/FF6B35/white?text=🍽️' }}
+          onError={(e) => {
+            e.target.onerror = null
+            e.target.src = 'https://placehold.co/400x250/FF6B35/FFFFFF?text=Tadimla'
+          }}
         />
         {!is_open && (
           <div className={styles.closedOverlay}>

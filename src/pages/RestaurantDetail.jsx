@@ -54,7 +54,10 @@ function RestaurantDetail() {
           src={restaurant.image}
           alt={restaurant.name}
           className={styles.bannerImage}
-          onError={(e) => { e.target.src = 'https://placehold.co/1200x280/FF6B35/white?text=🍽️' }}
+          onError={(e) => {
+            e.target.onerror = null
+            e.target.src = 'https://placehold.co/1200x280/FF6B35/FFFFFF?text=Tadimla'
+          }}
         />
         <div className={styles.bannerOverlay}>
           <button onClick={() => navigate(-1)} className={styles.backButton}>← Geri</button>
@@ -107,7 +110,10 @@ function RestaurantDetail() {
                 src={item.image}
                 alt={item.name}
                 className={styles.menuImage}
-                onError={(e) => { e.target.src = 'https://placehold.co/80x80/FF6B35/white?text=🍽️' }}
+                onError={(e) => {
+                  e.target.onerror = null
+                  e.target.src = 'https://placehold.co/80x80/FF6B35/FFFFFF?text=Yemek'
+                }}
               />
               <div className={styles.menuInfo}>
                 <h3 className={styles.menuName}>{item.name}</h3>
