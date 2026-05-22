@@ -5,22 +5,34 @@ const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Mevcut session'ı kontrol et
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
-      setLoading(false)
+      if (session?.user) fetchProfile(session.user.id)
+      else setLoading(false)
     })
 
-    // Auth değişikliklerini dinle
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
+      if (session?.user) fetchProfile(session.user.id)
+      else { setProfile(null); setLoading(false) }
     })
 
     return () => subscription.unsubscribe()
   }, [])
+
+  const fetchProfile = async (userId) => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single()
+    setProfile(data)
+    setLoading(false)
+  }
 
   const login = async (email, password) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -28,23 +40,46 @@ export function AuthProvider({ children }) {
     return true
   }
 
-  const register = async (name, email, password) => {
-    const { error } = await supabase.auth.signUp({
+  const register = async (name, email, password, role = 'user', restaurantName = '') => {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { name } }
     })
     if (error) throw error
+
+    if (data.user) {
+      await supabase.from('profiles').insert({
+        id: data.user.id,
+        name,
+        email,
+        role,
+        restaurant_name: role === 'restaurant' ? restaurantName : null
+      })
+    }
     return true
   }
 
   const logout = async () => {
     await supabase.auth.signOut()
     setUser(null)
+    setProfile(null)
+  }
+
+  const updateProfile = async (updates) => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+      .select()
+      .single()
+    if (error) throw error
+    setProfile(data)
+    return data
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, profile, loading, login, register, logout, updateProfile, fetchProfile }}>
       {children}
     </AuthContext.Provider>
   )

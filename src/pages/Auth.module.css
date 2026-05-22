@@ -143,3 +143,44 @@
   font-size: var(--font-size-sm);
   text-align: center;
 }
+.roleSelector {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.roleButton {
+  flex: 1;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-bg-main);
+  background-color: var(--color-bg-main);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.roleButton:hover {
+  border-color: var(--color-primary);
+}
+
+.roleActive {
+  border-color: var(--color-primary) !important;
+  background-color: rgba(255, 107, 53, 0.08) !important;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.forgotPassword {
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-top: var(--spacing-xs);
+  transition: opacity var(--transition-fast);
+}
+
+.forgotPassword:hover {
+  opacity: 0.7;
+}

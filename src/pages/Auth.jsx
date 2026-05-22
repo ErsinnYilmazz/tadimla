@@ -12,7 +12,14 @@ function Auth() {
   const [errors, setErrors] = useState({})
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
-  const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '', confirmPassword: '' })
+  const [registerForm, setRegisterForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: 'user',
+    restaurantName: ''
+  })
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target
@@ -40,6 +47,7 @@ function Auth() {
     if (!registerForm.password.trim()) newErrors.password = 'Şifre gerekli'
     if (registerForm.password.length < 6) newErrors.password = 'Şifre en az 6 karakter olmalı'
     if (registerForm.password !== registerForm.confirmPassword) newErrors.confirmPassword = 'Şifreler eşleşmiyor'
+    if (registerForm.role === 'restaurant' && !registerForm.restaurantName.trim()) newErrors.restaurantName = 'Restoran adı gerekli'
     return newErrors
   }
 
@@ -58,7 +66,7 @@ function Auth() {
     const newErrors = validateRegister()
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
     try {
-      await register(registerForm.name, registerForm.email, registerForm.password)
+      await register(registerForm.name, registerForm.email, registerForm.password, registerForm.role, registerForm.restaurantName)
       navigate('/')
     } catch (err) {
       setErrors({ general: err.message || 'Kayıt olurken hata oluştu' })
@@ -115,18 +123,17 @@ function Auth() {
               {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
 
-            {errors.general && (
-              <div className={styles.generalError}>
-                ⚠️ {errors.general}
-              </div>
-            )}
+            {errors.general && <div className={styles.generalError}>⚠️ {errors.general}</div>}
+
+            <button onClick={handleLogin} disabled={loading} className={`${styles.submitButton} ${loading ? styles.loading : ''}`}>
+              {loading ? '⏳ Giriş yapılıyor...' : 'Giriş Yap'}
+            </button>
 
             <button
-              onClick={handleLogin}
-              disabled={loading}
-              className={`${styles.submitButton} ${loading ? styles.loading : ''}`}
+              onClick={() => navigate('/sifremi-unuttum')}
+              className={styles.forgotPassword}
             >
-              {loading ? '⏳ Giriş yapılıyor...' : 'Giriş Yap'}
+              Şifremi Unuttum
             </button>
 
             <p className={styles.switchText}>
@@ -140,6 +147,23 @@ function Auth() {
 
         {tab === 'register' && (
           <div className={styles.form}>
+
+            {/* Rol Seçimi */}
+            <div className={styles.roleSelector}>
+              <button
+                onClick={() => setRegisterForm(prev => ({ ...prev, role: 'user' }))}
+                className={`${styles.roleButton} ${registerForm.role === 'user' ? styles.roleActive : ''}`}
+              >
+                👤 Müşteri
+              </button>
+              <button
+                onClick={() => setRegisterForm(prev => ({ ...prev, role: 'restaurant' }))}
+                className={`${styles.roleButton} ${registerForm.role === 'restaurant' ? styles.roleActive : ''}`}
+              >
+                🍽️ Restoran
+              </button>
+            </div>
+
             <div className={styles.formGroup}>
               <label className={styles.label}>Ad Soyad</label>
               <input
@@ -151,6 +175,20 @@ function Auth() {
               />
               {errors.name && <p className={styles.error}>{errors.name}</p>}
             </div>
+
+            {registerForm.role === 'restaurant' && (
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Restoran Adı</label>
+                <input
+                  name="restaurantName"
+                  value={registerForm.restaurantName}
+                  onChange={handleRegisterChange}
+                  placeholder="Örn: Burger House"
+                  className={`${styles.input} ${errors.restaurantName ? styles.inputError : ''}`}
+                />
+                {errors.restaurantName && <p className={styles.error}>{errors.restaurantName}</p>}
+              </div>
+            )}
 
             <div className={styles.formGroup}>
               <label className={styles.label}>E-posta</label>
@@ -191,17 +229,9 @@ function Auth() {
               {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
             </div>
 
-            {errors.general && (
-              <div className={styles.generalError}>
-                ⚠️ {errors.general}
-              </div>
-            )}
+            {errors.general && <div className={styles.generalError}>⚠️ {errors.general}</div>}
 
-            <button
-              onClick={handleRegister}
-              disabled={loading}
-              className={`${styles.submitButton} ${loading ? styles.loading : ''}`}
-            >
+            <button onClick={handleRegister} disabled={loading} className={`${styles.submitButton} ${loading ? styles.loading : ''}`}>
               {loading ? '⏳ Kayıt yapılıyor...' : 'Kayıt Ol'}
             </button>
 

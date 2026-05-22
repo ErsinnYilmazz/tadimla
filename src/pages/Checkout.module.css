@@ -267,3 +267,61 @@
   text-align: center;
   margin-bottom: var(--spacing-md);
 }
+.processingPage {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.processingCard {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.spinner {
+  font-size: 64px;
+  animation: pulse 1s ease-in-out infinite;
+  margin-bottom: var(--spacing-lg);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.processingTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+}
+
+.processingText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.processingBar {
+  height: 4px;
+  background-color: var(--color-bg-main);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.processingFill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: loading 2s ease-in-out forwards;
+}
+
+@keyframes loading {
+  from { width: 0% }
+  to { width: 100% }
+}
