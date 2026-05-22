@@ -7,7 +7,7 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { totalItems } = useCart()
-  const { user, logout } = useAuth()
+  const { user, logout, profile } = useAuth()
 
   const isActive = (path) => location.pathname === path
 
@@ -44,13 +44,20 @@ function Navbar() {
               <button onClick={() => navigate('/profil')} className={styles.userName}>
                 👤 {user?.user_metadata?.name?.split(' ')[0] || user?.email}
               </button>
+              {profile?.role === 'restaurant' && (
+                <button onClick={() => navigate('/restoran-panel')} className={styles.panelButton}>
+                  🍽️ Panel
+                </button>
+              )}
+              {profile?.role === 'admin' && (
+                <button onClick={() => navigate('/admin')} className={styles.panelButton}>
+                  🔧 Admin
+                </button>
+              )}
               <button onClick={logout} className={styles.logoutButton}>Çıkış</button>
             </div>
           ) : (
-            <button
-              onClick={() => navigate('/giris')}
-              className={styles.loginButton}
-            >
+            <button onClick={() => navigate('/giris')} className={styles.loginButton}>
               Giriş Yap
             </button>
           )}

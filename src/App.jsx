@@ -17,6 +17,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import "./index.css";
+import RestaurantPanel from './pages/RestaurantPanel'
 
 function NotFound() {
   return (
@@ -48,6 +49,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/sifremi-unuttum" element={<ForgotPassword />} />
               <Route path="/parola-sifirla" element={<ResetPassword />} />
+              <Route path="/restoran-panel" element={<RestaurantPanel />} />
             </Routes>
           </Layout>
         </CartProvider>
