@@ -250,3 +250,101 @@
   background-color: #F44336;
   color: white;
 }
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-main);
+  border-radius: var(--radius-md);
+  flex-wrap: wrap;
+}
+
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 150px;
+}
+
+.userName {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.userEmail {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.userRoleBadge {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 2px var(--spacing-sm);
+  border-radius: var(--radius-full);
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.roleSelect {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-bg-card);
+  background-color: var(--color-bg-card);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.restaurantSelect {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-bg-card);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  outline: none;
+  color: var(--color-primary);
+}
+
+.resetButton {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background-color: var(--color-warning);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+  white-space: nowrap;
+}
+
+.resetButton:hover {
+  opacity: 0.8;
+}
