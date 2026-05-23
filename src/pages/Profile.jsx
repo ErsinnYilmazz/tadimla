@@ -11,11 +11,7 @@ function Profile() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('orders')
   const [editMode, setEditMode] = useState(false)
-  const [form, setForm] = useState({
-    name: '',
-    phone: '',
-    address: '',
-  })
+  const [form, setForm] = useState({ name: '', phone: '', address: '' })
   const [saving, setSaving] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
 
@@ -49,11 +45,7 @@ function Profile() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      await updateProfile({
-        name: form.name,
-        phone: form.phone,
-        address: form.address,
-      })
+      await updateProfile({ name: form.name, phone: form.phone, address: form.address })
       setSaveSuccess(true)
       setEditMode(false)
       setTimeout(() => setSaveSuccess(false), 3000)
@@ -92,7 +84,6 @@ function Profile() {
   return (
     <div className={styles.page}>
 
-      {/* Profil Kartı */}
       <div className={styles.profileCard}>
         <div className={styles.avatar}>
           {profile?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || '👤'}
@@ -114,36 +105,22 @@ function Profile() {
         </div>
       </div>
 
-      {/* Başarı mesajı */}
       {saveSuccess && (
-        <div className={styles.successMessage}>
-          ✅ Profiliniz başarıyla güncellendi!
-        </div>
+        <div className={styles.successMessage}>✅ Profiliniz başarıyla güncellendi!</div>
       )}
 
-      {/* Sekmeler */}
       <div className={styles.tabs}>
-        <button
-          onClick={() => setActiveTab('orders')}
-          className={`${styles.tab} ${activeTab === 'orders' ? styles.tabActive : ''}`}
-        >
+        <button onClick={() => setActiveTab('orders')} className={`${styles.tab} ${activeTab === 'orders' ? styles.tabActive : ''}`}>
           📦 Siparişlerim
         </button>
-        <button
-          onClick={() => setActiveTab('profile')}
-          className={`${styles.tab} ${activeTab === 'profile' ? styles.tabActive : ''}`}
-        >
+        <button onClick={() => setActiveTab('profile')} className={`${styles.tab} ${activeTab === 'profile' ? styles.tabActive : ''}`}>
           👤 Bilgilerim
         </button>
-        <button
-          onClick={() => setActiveTab('password')}
-          className={`${styles.tab} ${activeTab === 'password' ? styles.tabActive : ''}`}
-        >
+        <button onClick={() => setActiveTab('password')} className={`${styles.tab} ${activeTab === 'password' ? styles.tabActive : ''}`}>
           🔐 Şifre Değiştir
         </button>
       </div>
 
-      {/* Siparişler */}
       {activeTab === 'orders' && (
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Sipariş Geçmişim</h2>
@@ -178,7 +155,6 @@ function Profile() {
                       {getStatusLabel(order.status)}
                     </span>
                   </div>
-
                   <div className={styles.orderItems}>
                     {order.items?.map((item, i) => (
                       <div key={i} className={styles.orderItem}>
@@ -187,18 +163,13 @@ function Profile() {
                       </div>
                     ))}
                   </div>
-
                   <div className={styles.orderFooter}>
                     <div className={styles.orderAddress}>📍 {order.delivery_address}</div>
                     <div className={styles.orderTotal}>
                       Toplam: <strong>{(Number(order.total_price) + Number(order.delivery_fee)).toFixed(2)} ₺</strong>
                     </div>
                   </div>
-
-                  <button
-                    onClick={() => navigate(`/siparis-takibi/${order.id}`)}
-                    className={styles.trackButton}
-                  >
+                  <button onClick={() => navigate(`/siparis-takibi/${order.id}`)} className={styles.trackButton}>
                     Siparişi Takip Et →
                   </button>
                 </div>
@@ -208,7 +179,6 @@ function Profile() {
         </div>
       )}
 
-      {/* Bilgiler */}
       {activeTab === 'profile' && (
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Kişisel Bilgilerim</h2>
@@ -216,12 +186,7 @@ function Profile() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Ad Soyad</label>
             {editMode ? (
-              <input
-                value={form.name}
-                onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))}
-                className={styles.input}
-                placeholder="Ad Soyad"
-              />
+              <input value={form.name} onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))} className={styles.input} placeholder="Ad Soyad" />
             ) : (
               <p className={styles.infoValue}>{profile?.name || '-'}</p>
             )}
@@ -235,12 +200,7 @@ function Profile() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Telefon</label>
             {editMode ? (
-              <input
-                value={form.phone}
-                onChange={e => setForm(prev => ({ ...prev, phone: e.target.value }))}
-                className={styles.input}
-                placeholder="0555 555 55 55"
-              />
+              <input value={form.phone} onChange={e => setForm(prev => ({ ...prev, phone: e.target.value }))} className={styles.input} placeholder="0555 555 55 55" />
             ) : (
               <p className={styles.infoValue}>{profile?.phone || '-'}</p>
             )}
@@ -249,58 +209,56 @@ function Profile() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Varsayılan Adres</label>
             {editMode ? (
-              <textarea
-                value={form.address}
-                onChange={e => setForm(prev => ({ ...prev, address: e.target.value }))}
-                className={styles.textarea}
-                placeholder="Adresinizi girin..."
-                rows={3}
-              />
+              <textarea value={form.address} onChange={e => setForm(prev => ({ ...prev, address: e.target.value }))} className={styles.textarea} placeholder="Adresinizi girin..." rows={3} />
             ) : (
               <p className={styles.infoValue}>{profile?.address || '-'}</p>
             )}
           </div>
 
           {editMode && (
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className={styles.saveButton}
-            >
+            <button onClick={handleSave} disabled={saving} className={styles.saveButton}>
               {saving ? '⏳ Kaydediliyor...' : '✓ Kaydet'}
             </button>
           )}
         </div>
       )}
 
-      {/* Şifre Değiştir */}
-      {activeTab === 'password' && (
-        <ChangePassword />
-      )}
+      {activeTab === 'password' && <ChangePassword user={user} />}
 
     </div>
   )
 }
 
-function ChangePassword() {
-  const [form, setForm] = useState({ password: '', confirmPassword: '' })
+function ChangePassword({ user }) {
+  const [form, setForm] = useState({ currentPassword: '', password: '', confirmPassword: '' })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = async () => {
     const newErrors = {}
-    if (!form.password) newErrors.password = 'Şifre gerekli'
+    if (!form.currentPassword) newErrors.currentPassword = 'Mevcut şifre gerekli'
+    if (!form.password) newErrors.password = 'Yeni şifre gerekli'
     if (form.password.length < 6) newErrors.password = 'En az 6 karakter'
     if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Şifreler eşleşmiyor'
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
 
     setLoading(true)
     try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: form.currentPassword
+      })
+      if (signInError) {
+        setErrors({ currentPassword: 'Mevcut şifre yanlış' })
+        setLoading(false)
+        return
+      }
+
       const { error } = await supabase.auth.updateUser({ password: form.password })
       if (error) throw error
       setSuccess(true)
-      setForm({ password: '', confirmPassword: '' })
+      setForm({ currentPassword: '', password: '', confirmPassword: '' })
     } catch (err) {
       setErrors({ general: 'Şifre güncellenemedi' })
     } finally {
@@ -312,9 +270,19 @@ function ChangePassword() {
     <div className={styles.section}>
       <h2 className={styles.sectionTitle}>Şifre Değiştir</h2>
 
-      {success && (
-        <div className={styles.successMessage}>✅ Şifreniz başarıyla güncellendi!</div>
-      )}
+      {success && <div className={styles.successMessage}>✅ Şifreniz başarıyla güncellendi!</div>}
+
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Mevcut Şifre</label>
+        <input
+          type="password"
+          value={form.currentPassword}
+          onChange={e => { setForm(prev => ({ ...prev, currentPassword: e.target.value })); setErrors({}) }}
+          className={`${styles.input} ${errors.currentPassword ? styles.inputError : ''}`}
+          placeholder="Mevcut şifreniz"
+        />
+        {errors.currentPassword && <p className={styles.error}>{errors.currentPassword}</p>}
+      </div>
 
       <div className={styles.formGroup}>
         <label className={styles.label}>Yeni Şifre</label>
@@ -329,24 +297,20 @@ function ChangePassword() {
       </div>
 
       <div className={styles.formGroup}>
-        <label className={styles.label}>Şifre Tekrar</label>
+        <label className={styles.label}>Yeni Şifre Tekrar</label>
         <input
           type="password"
           value={form.confirmPassword}
           onChange={e => { setForm(prev => ({ ...prev, confirmPassword: e.target.value })); setErrors({}) }}
           className={`${styles.input} ${errors.confirmPassword ? styles.inputError : ''}`}
-          placeholder="Şifreni tekrar gir"
+          placeholder="Yeni şifreni tekrar gir"
         />
         {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
       </div>
 
       {errors.general && <div className={styles.errorMessage}>⚠️ {errors.general}</div>}
 
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className={styles.saveButton}
-      >
+      <button onClick={handleSubmit} disabled={loading} className={styles.saveButton}>
         {loading ? '⏳ Güncelleniyor...' : '🔐 Şifremi Güncelle'}
       </button>
     </div>
